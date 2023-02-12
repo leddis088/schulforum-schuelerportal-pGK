@@ -28,7 +28,7 @@ Dein Passwort:<br>
 
 <?php
 $con = mysqli_connect("localhost","root","felix123","forum-db");
-$con = mysqli_connect('localhost', 'root', 'felix123',’db_contact’);
+$con = mysqli_connect('localhost', 'root', 'felix123');
 $txtUsers = $_POST['txtUsers'];
 $txtPW = $_POST['txtPW'];
 $sql = "INSERT INTO `users` (`Users`, `PW`) VALUES ('0', '$txtName', '$txtPW');"
