@@ -1,35 +1,48 @@
-<html xmlns="http://www.w3.org/1999/xhtml"> 
+<!DOCTYPE html>
+<html>
 <head>
   <title>Login</title>
-  <link rel="stylesheet" href="home_style.css">
-  <link rel="sqlfile" href="home_style.css">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Loginpage Schulforum</title>
-</head> 
+</head>
 <body>
- 
-    <?php
-    $serverName = "localhost";
-    $userName = "root";
-    $password = "felix123";
-    $database = "forum-db";
-    ?>
- 
-<form action="?login=1" method="post">
-E-Mail:<br>
-<input type="name" size="40" maxlength="25" name="name"><br><br>
 
-Dein Passwort:<br>
-<input type="password" size="35"  maxlength="250" name="passwort"><br>
-<input type="submit" value="Abschicken">
-</form> 
+  <h1>Login</h1>
+
+  <?php
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $db = mysqli_connect('localhost', 'forum_user', 'Felix123!', 'forum_db');
+
+      $username = mysqli_real_escape_string($db, $_POST['username']);
+      $password = mysqli_real_escape_string($db, $_POST['password']);
+
+      $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+      $result = mysqli_query($db, $query);
+      $user = mysqli_fetch_assoc($result);
+
+      if ($user) {
+        session_start();
+        $_SESSION['username'] = $username;
+        header('Location: welcome.php');
+        exit();
+      } else {
+
+        echo "<p>Invalid username or password</p>";
+      }
+    }
+  ?>
+
+  <form method="POST">
+    <label>Username:</label>
+    <input type="text" name="username" required>
+    <br>
+    <label>Password:</label>
+    <input type="password" name="password" required>
+    <br>
+    <button type="submit">Login</button>
+  </form>
+
+  <p>Don't have an account? <a href="register.php">Register</a></p>
+
 </body>
 </html>
-
-<?php
-$con = mysqli_connect("localhost","root","felix123","forum-db");
-$con = mysqli_connect('localhost', 'root', 'felix123');
-$txtUsers = $_POST['txtUsers'];
-$txtPW = $_POST['txtPW'];
-$sql = "INSERT INTO `users` (`Users`, `PW`) VALUES ('0', '$txtName', '$txtPW');"
-?>
