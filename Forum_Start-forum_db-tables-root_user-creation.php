@@ -64,22 +64,30 @@ $result = $conn->query($sql);
 
 if ($result->num_rows == 0) {
 
-    $sql = "INSERT INTO username (name) VALUES ('root')";
+    $username = 'root';
+    $first_name = 'root';
+    $last_name = 'root';
+    $class = 'none';
+    $password = 'felix123';
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $rank = 'admin';
+
+    $sql = "INSERT INTO username (name) VALUES ('$username')";
     $conn->query($sql);
 
-    $sql = "INSERT INTO first_name (name) VALUES ('root')";
+    $sql = "INSERT INTO first_name (name) VALUES ('$first_name')";
     $conn->query($sql);
 
-    $sql = "INSERT INTO last_name (name) VALUES ('root')";
+    $sql = "INSERT INTO last_name (name) VALUES ('$last_name')";
     $conn->query($sql);
 
-    $sql = "INSERT INTO class (name) VALUES ('none')";
+    $sql = "INSERT INTO class (name) VALUES ('$class')";
     $conn->query($sql);
 
-    $sql = "INSERT INTO password (value) VALUES ('felix123')";
+    $sql = "INSERT INTO password (value) VALUES ('$hashed_password')";
     $conn->query($sql);
 
-    $sql = "INSERT INTO rank (name) VALUES ('admin')";
+    $sql = "INSERT INTO rank (name) VALUES ('$rank')";
     $conn->query($sql);
 
     echo "Root user created successfully";

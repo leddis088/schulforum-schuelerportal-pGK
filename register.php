@@ -4,49 +4,76 @@
   <title>Register</title>
 </head>
 <body>
-
   <h1>Register</h1>
-
   <?php
-    // If the user submits the form
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      // Connect to the database
-      $db = mysqli_connect('localhost', 'forum_user', 'Felix123!', 'forum_db');
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $servername = 'localhost';
+    $dbusername = 'forum_user';
+    $dbpassword = 'Felix123!';
+    $dbname = 'forum_db';
 
-      // Get the registration information from the form
-      $first_name = mysqli_real_escape_string($db, $_POST['first_name']);
-      $last_name = mysqli_real_escape_string($db, $_POST['last_name']);
-      $username = mysqli_real_escape_string($db, $_POST['username']);
-      $password = mysqli_real_escape_string($db, $_POST['password']);
-      $class = mysqli_real_escape_string($db, $_POST['class']);
+    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
-      // Hash the password
-      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    if ($conn->connect_error) {
+      die('Die Verbindung zur Datenbank wurde unterbrochen!');
+    }
 
-      // Insert the user into the database with default rank "schüler"
-      $query = "INSERT INTO users (first_name, last_name, username, password, class, rank) VALUES ('$first_name', '$last_name', '$username', '$hashed_password', '$class', 'schüler')";
-      mysqli_query($db, $query);
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+    $class = trim($_POST['class']);
 
-      // Log the user in
-      session_start();
-      $_SESSION['username'] = $username;
-      header('Location: welcome.php');
+    if (empty($username) || empty($password) || empty($class)) {
+      echo "Please fill the username and password fields.";
       exit();
     }
-  ?>
 
+    if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+      echo "Invalid username. Please use only letters, numbers, and underscores.";
+      exit();
+    }
+
+    if (strlen($password) < 8) {
+      echo "Password should be at least 8 characters long.";
+      exit();
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      echo "Username already exists. Please choose a different username.";
+      echo "<button onclick=\"window.location.href='login.php'\">Go to Login</button>";
+      exit();
+    }
+
+    $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
+
+    $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, username, password, class, rank) VALUES (?, ?, ?, ?, ?, 'schüler')");
+    $stmt->bind_param("sssss", $first_name, $last_name, $username, $hash, $class);
+    $stmt->execute();
+
+    session_start();
+    $_SESSION['username'] = $username;
+    header('Location: welcome.php');
+    exit();
+  }
+  ?>
   <form method="POST">
     <label>First Name:</label>
-    <input type="text" name="first_name" required>
+    <input type="text" name="first_name">
     <br>
     <label>Last Name:</label>
-    <input type="text" name="last_name" required>
+    <input type="text" name="last_name">
     <br>
     <label>Username:</label>
     <input type="text" name="username" required>
     <br>
     <label>Password:</label>
-    <input type="password" name="password" required>
+    <input type="password" name="password" id="password" required>
+    <button type="button" onclick="togglePassword()">Show</button>
     <br>
     <label>Class:</label>
     <select name="class" required>
@@ -61,8 +88,16 @@
     <br>
     <button type="submit">Register</button>
   </form>
-
   <p>Already have an account? <a href="login.php">Login</a></p>
-
+  <script>
+    function togglePassword() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
 </body>
 </html>
