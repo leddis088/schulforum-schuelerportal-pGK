@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Register</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
 <body>
   <h1>Register</h1>
