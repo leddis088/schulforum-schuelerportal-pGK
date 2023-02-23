@@ -40,6 +40,16 @@
       exit();
     }
 
+    if (!preg_match('/[a-z]/i', $password)) {
+      echo "Password must contain at least one letter!";
+      exit();
+    }
+
+    if (!preg_match('/[0-9]/', $password)) {
+      echo "Password must contain at least one number!";
+      exit();
+    }
+
     $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -89,7 +99,7 @@
     <br>
     <button type="submit">Register</button>
   </form>
-  <p>Already have an account? <a href="login.php">Login</a></p>
+  <p><a href="login.php">Already have an account?</a></p>
   <script>
     function togglePassword() {
       var x = document.getElementById("password");
