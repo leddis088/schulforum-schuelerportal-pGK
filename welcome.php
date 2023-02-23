@@ -14,4 +14,4 @@
 
   echo "<form action='logout.php'><button type='submit'>Logout</button></form>";
 ?>
-<p><a href="home.html">Zur Startseite</a></p>
+<p><a href="home.php">Zur Startseite</a></p>

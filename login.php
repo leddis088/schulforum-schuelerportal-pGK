@@ -27,7 +27,7 @@
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['hash'])) {
     
-          header('Location: home.html');
+          header('Location: home.php');
           exit();
         } else {
           echo 'Incorrect password!';
