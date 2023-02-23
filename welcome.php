@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<head>
+  <title>Welcome</title>
+</head>
 <?php
   session_start();
 
@@ -10,3 +14,4 @@
 
   echo "<form action='logout.php'><button type='submit'>Logout</button></form>";
 ?>
+<p><a href="home.html">Zur Startseite</a></p>
