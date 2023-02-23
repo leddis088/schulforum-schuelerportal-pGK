@@ -19,29 +19,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $class = $_POST["class"];
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $error_message = "Username already exists! <a href=login.php>login</a>";
+    if (strlen($password) < 8 || !preg_match('/[A-Za-z]/', $password) || !preg_match('/\d/', $password)) {
+        $error_message = "Password must have at least 8 characters and contain at least one letter and one number.";
     } else {
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        $stmt = $conn->prepare("INSERT INTO users (_id, username, first_name, last_name, hash, class) VALUES (UUID(), ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $username, $first_name, $last_name, $hash, $class);
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+        $stmt->bind_param("s", $username);
         $stmt->execute();
+        $result = $stmt->get_result();
 
-        $user_id = $conn->insert_id;
+        if ($result->num_rows > 0) {
+            $error_message = "Username already exists! <a href=login.php>login</a>";
+        } else {
+            $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $conn->prepare("INSERT INTO user_perms (_id, user_id, permission) VALUES (UUID(), ?, 'user')");
-        $stmt->bind_param("s", $user_id);
-        $stmt->execute();
+            $stmt = $conn->prepare("INSERT INTO users (_id, username, first_name, last_name, hash, class) VALUES (UUID(), ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $username, $first_name, $last_name, $hash, $class);
+            $stmt->execute();
 
-        $_SESSION["username"] = $username;
-        header("Location: welcome.php");
-        exit();
+            $user_id = $conn->insert_id;
+
+            $stmt = $conn->prepare("INSERT INTO user_perms (_id, user_id, permission) VALUES (UUID(), ?, 'user')");
+            $stmt->bind_param("s", $user_id);
+            $stmt->execute();
+
+            $_SESSION["username"] = $username;
+            header("Location: welcome.php");
+            exit();
+        }
     }
 }
 
@@ -61,10 +65,10 @@ $conn->close();
     <?php } ?>
     <form method="post">
         <label for="first_name">First Name</label>
-        <input type="text" id="first_name" name="first_name" required>
+        <input type="text" id="first_name" name="first_name">
         <br>
         <label for="last_name">Last Name</label>
-        <input type="text" id="last_name" name="last_name" required>
+        <input type="text" id="last_name" name="last_name">
         <br>
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
@@ -77,24 +81,24 @@ $conn->close();
         <select id="class" name="class" required>
             <option value="1A">1A</option>
             <option value="1B">1B</option>
-            <option value="2A">2A</option>
-            <option value="2B">2B</option>
-            <option value="3A">3A</option>
-            <option value="4A">4A</option>
-            <option value="4B">4B</option>
-        </select>
-        <br>
-        <button type="submit">Register</button>
-    </form>
-    <script>
-    function togglePassword() {
-      var x = document.getElementById("password");
-      if (x.type === "password") {
-        x.type = "text";
-      } else {
-        x.type = "password";
-      }
-    }
-      </script>
-    </body>
+        <option value="2A">2A</option>
+        <option value="2B">2B</option>
+        <option value="3A">3A</option>
+        <option value="4A">4A</option>
+        <option value="4B">4B</option>
+    </select>
+    <br>
+    <button type="submit">Register</button>
+</form>
+<script>
+function togglePassword() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+</body>
 </html>
