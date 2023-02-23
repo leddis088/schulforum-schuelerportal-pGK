@@ -71,6 +71,7 @@ $conn->close();
         <br>
         <label for="password">Password</label>
         <input type="password" id="password" name="password" minlength="8" required>
+        <button type="button" onclick="togglePassword()">Show</button>
         <br>
         <label for="class">Class</label>
         <select id="class" name="class" required>
@@ -85,5 +86,15 @@ $conn->close();
         <br>
         <button type="submit">Register</button>
     </form>
+    <script>
+    function togglePassword() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+      </script>
     </body>
 </html>
