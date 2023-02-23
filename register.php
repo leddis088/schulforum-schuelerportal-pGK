@@ -1,114 +1,89 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Register</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-</head>
-<body>
-  <h1>Register</h1>
-  <?php
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $servername = 'localhost';
-    $dbusername = 'forum_user';
-    $dbpassword = 'Felix123!';
-    $dbname = 'forum_db';
+<?php
+session_start();
 
-    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+$servername = "localhost";
+$username = "forum_user";
+$password = "Felix123!";
+$dbname = "forum_db";
 
-    if ($conn->connect_error) {
-      die('Die Verbindung zur Datenbank wurde unterbrochen!');
-    }
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    $first_name = trim($_POST['first_name']);
-    $last_name = trim($_POST['last_name']);
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-    $class = trim($_POST['class']);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    if (empty($username) || empty($password) || empty($class)) {
-      echo "Please fill the username and password fields.";
-      exit();
-    }
-
-    if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
-      echo "Invalid username. Please use only letters, numbers, and underscores.";
-      exit();
-    }
-
-    if (strlen($password) < 8) {
-      echo "Password should be at least 8 characters long.";
-      exit();
-    }
-
-    if (!preg_match('/[a-z]/i', $password)) {
-      echo "Password must contain at least one letter!";
-      exit();
-    }
-
-    if (!preg_match('/[0-9]/', $password)) {
-      echo "Password must contain at least one number!";
-      exit();
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $class = $_POST["class"];
 
     $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
+
     if ($result->num_rows > 0) {
-      echo "Username already exists. Please choose a different username.";
-      echo "<button onclick=\"window.location.href='login.php'\">Go to Login</button>";
-      exit();
+        $error_message = "Username already exists! <a href=login.php>login</a>";
+    } else {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $conn->prepare("INSERT INTO users (_id, username, first_name, last_name, hash, class) VALUES (UUID(), ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $username, $first_name, $last_name, $hash, $class);
+        $stmt->execute();
+
+        $user_id = $conn->insert_id;
+
+        $stmt = $conn->prepare("INSERT INTO user_perms (_id, user_id, permission) VALUES (UUID(), ?, 'user')");
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+
+        $_SESSION["username"] = $username;
+        header("Location: welcome.php");
+        exit();
     }
+}
 
-    $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
+$conn->close();
+?>
 
-    $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, username, password, class, rank) VALUES (?, ?, ?, ?, ?, 'schüler')");
-    $stmt->bind_param("sssss", $first_name, $last_name, $username, $hash, $class);
-    $stmt->execute();
-
-    session_start();
-    $_SESSION['username'] = $username;
-    header('Location: welcome.php');
-    exit();
-  }
-  ?>
-  <form method="POST">
-    <label>First Name:</label>
-    <input type="text" name="first_name">
-    <br>
-    <label>Last Name:</label>
-    <input type="text" name="last_name">
-    <br>
-    <label>Username:</label>
-    <input type="text" name="username" required>
-    <br>
-    <label>Password:</label>
-    <input type="password" name="password" id="password" required>
-    <button type="button" onclick="togglePassword()">Show</button>
-    <br>
-    <label>Class:</label>
-    <select name="class" required>
-      <option value="1A">1A</option>
-      <option value="1B">1B</option>
-      <option value="2A">2A</option>
-      <option value="2B">2B</option>
-      <option value="3A">3A</option>
-      <option value="4A">4A</option>
-      <option value="4B">4B</option>
-    </select>
-    <br>
-    <button type="submit">Register</button>
-  </form>
-  <p><a href="login.php">Already have an account?</a></p>
-  <script>
-    function togglePassword() {
-      var x = document.getElementById("password");
-      if (x.type === "password") {
-        x.type = "text";
-      } else {
-        x.type = "password";
-      }
-    }
-  </script>
-</body>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+    <h1>Register</h1>
+    <?php if (isset($error_message)) { ?>
+        <p><?php echo $error_message; ?></p>
+    <?php } ?>
+    <form method="post">
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" required>
+        <br>
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" required>
+        <br>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" minlength="8" required>
+        <br>
+        <label for="class">Class</label>
+        <select id="class" name="class" required>
+            <option value="1A">1A</option>
+            <option value="1B">1B</option>
+            <option value="2A">2A</option>
+            <option value="2B">2B</option>
+            <option value="3A">3A</option>
+            <option value="4A">4A</option>
+            <option value="4B">4B</option>
+        </select>
+        <br>
+        <button type="submit">Register</button>
+    </form>
+    </body>
 </html>
