@@ -6,6 +6,7 @@
 </head>
 <body>
 	<?php
+  session_start();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {	
       $username = $_POST['username'];
       $password = $_POST['password'];
@@ -15,7 +16,9 @@
       $dbname = 'forum_db';
     
       $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
-    
+      
+      $user_id = $conn->insert_id;
+
       if ($conn->connect_error) {
         die('Connection failed: ' . $conn->connect_error);
       }
@@ -26,8 +29,8 @@
       if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['hash'])) {
-    
-          header('Location: home.php');
+          $_SESSION["user_id"] = $user_id;
+          header("Location: home.php");
           exit();
         } else {
           echo 'Incorrect password!';

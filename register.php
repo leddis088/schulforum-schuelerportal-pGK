@@ -42,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("s", $user_id);
             $stmt->execute();
 
-            $_SESSION["username"] = $username;
-            header("Location: welcome.php");
+            $_SESSION["user_id"] = $user_id;
+            header("Location: home.php");
             exit();
         }
     }
