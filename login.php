@@ -33,10 +33,10 @@
           header("Location: home.php");
           exit();
         } else {
-          echo 'Incorrect password!';
+          echo 'Nutzername oder Passwort falsch!';
         }
       } else {
-        echo 'Username not found!';
+        echo 'Nutzername oder Passwort falsch!';
       }
     
       $conn->close();
