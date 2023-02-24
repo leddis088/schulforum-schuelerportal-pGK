@@ -30,7 +30,7 @@
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['hash'])) {
           $_SESSION["user_id"] = $user_id;
-          header("Location: debugging.php");
+          header("Location: home.php");
           exit();
         } else {
           echo 'Incorrect password!';
