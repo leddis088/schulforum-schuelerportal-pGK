@@ -1,4 +1,3 @@
-
 <?php
 $servername = "localhost";
 $username = "forum_user";
@@ -23,8 +22,10 @@ $sql = "CREATE TABLE IF NOT EXISTS users (
     class VARCHAR(30) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    hash VARCHAR(255) NOT NULL
+    hash VARCHAR(255) NOT NULL,
+    profile_picture VARCHAR(255) DEFAULT NULL
 )";
+
 $conn->query($sql);
 
 $sql = "CREATE TABLE IF NOT EXISTS posts (
