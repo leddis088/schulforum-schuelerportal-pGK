@@ -2,9 +2,13 @@
 <html>
   <head>
     <title>Forum</title>
-    <link rel="stylesheet" href="home_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
   </head>
   <body>
+      <ul>
+        <li style="float:right"><a href="home.php">Back</a></li>
+      </ul>
+
     <?php
     session_start();
 

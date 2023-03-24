@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Forum</title>
-    <link rel="stylesheet" href="home_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
   </head>
   <body>
     <?php
@@ -78,10 +78,10 @@
 
     <h2>Create Post</h2>
     <form method="post" action="">
-      <label>Content:</label>
-      <textarea name="content" required></textarea><br><br>
       <label>Topic:</label>
       <input type="text" name="topic" required><br><br>
+      <label>Content:</label>
+      <textarea name="content" required></textarea><br><br>
       <input type="submit" value="Create Post">
     </form>
 
@@ -107,10 +107,10 @@
 		  $author = $result2->fetch_assoc();
 		  $author_name = $author['first_name'] . ' ' . $author['last_name'];
 	  
-		  echo "<h3>$post_content</h3>";
-		  echo "  <p>Topic: $post_topic</p>";
-		  echo "<p>Author: $author_name</p>";
+      echo "<p>Topic: $post_topic</p>";
+      echo "<p>Author: $author_name</p>";
 		  echo "<p>Date: $post_date</p>";
+		  echo "<h3>$post_content</h3>";
 	  
 		  if ($author_id == $user_id || $is_admin) {
 			echo "<form method='post' action=''>";
