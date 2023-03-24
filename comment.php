@@ -30,14 +30,14 @@
       $content = $_POST['content'];
       $post_id = $_POST['post_id'];
       $date_created = date("Y-m-d H:i:s");
-
+    
       $sql = "INSERT INTO comments (_id, author_id, content, date_created, post_id) VALUES (UUID(), ?, ?, ?, ?)";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("ssss", $user_id, $content, $date_created, $post_id);
       $stmt->execute();
     }
-
-    $post_id = $_GET['post_id'];
+    
+    $post_id = $_POST['post_id'];
 
     $sql = "SELECT * FROM posts WHERE _id = ?";
     $stmt = $conn->prepare($sql);

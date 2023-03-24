@@ -14,7 +14,7 @@
     }
 
     $user_id = $_SESSION["user_id"];
-    $is_admin = $_SESSION["is_admin"];
+
     $servername= 'localhost';
     $dbusername = 'forum_user';
     $dbpassword = 'Felix123!';
@@ -40,7 +40,7 @@
           $post = $result->fetch_assoc();
           $author_id = $post['author_id'];
 
-          if ($author_id == $user_id || $is_admin) {
+          if ($author_id == $user_id) {
             $sql = "DELETE FROM posts WHERE _id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("s", $post_id);
@@ -52,6 +52,7 @@
           }
         }
       } else {
+        $post_id = $_POST['post_id'];
         $content = $_POST['content'];
         $topic = $_POST['topic'];
         $date_created = date("Y-m-d H:i:s");
@@ -117,12 +118,11 @@
 			echo "<input type='submit' value='Delete Post'>";
 			echo "</form>";
 		  }
-	  
-		  echo "<form method='post' action='comment.php'>";
-		  echo "<input type='hidden' name='post_id' value='$post_id'>";
-		  echo "<input type='submit' value='Kommentare anzeigen'>";
-		  echo "</form>";
-	  
+      echo "<form method='post' action='comment.php'>";
+      echo "<input type='hidden' name='post_id' value='$post_id'>";
+      echo "<input type='submit' value='Kommentar verfassen'>";
+      echo "</form>";	
+
 		  echo "<h4>Comments</h4>";
 	  
 		  $sql3 = "SELECT * FROM comments WHERE post_id = ?";
