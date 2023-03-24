@@ -70,7 +70,8 @@
         <li><a class="active" href="#">Home</a></li>
         <li><a href="#">Neuigkeiten</a></li>
         <li><a href="#">Portal</a></li>
-        <li style="float:right"><a href="logout.php">Logout</a></li>
+        <li style="float:right"><a href="account.php">account</a></li>
+        <li><a href="logout.php">logout</a></li>
       </ul>
     </nav>
 

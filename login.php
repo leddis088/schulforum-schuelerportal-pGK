@@ -29,12 +29,12 @@
       if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['hash'])) {
-          $_SESSION["user_id"] = $user_id;
+          $_SESSION["user_id"] = $user['_id']; // <-- Update this line
           header("Location: home.php");
           exit();
-        } else {
+      } else {
           echo 'Nutzername oder Passwort falsch!';
-        }
+      }      
       } else {
         echo 'Nutzername oder Passwort falsch!';
       }

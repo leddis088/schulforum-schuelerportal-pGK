@@ -12,8 +12,11 @@ if ($conn->connect_error) {
 }
 
 $user_id = $_SESSION["user_id"];
-$sql = "SELECT * FROM users WHERE _id='$user_id'";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM users WHERE _id=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
     $username = $row["username"];
@@ -90,8 +93,10 @@ if (!$profile_picture) {
 <html>
 <head>
     <title>Account Settings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
 <body>
+<li style="float:right"><a href="home.php">Back</a></li>
 <h1>Account Settings</h1>
     <form method="post" enctype="multipart/form-data">
         <label>Username:</label>

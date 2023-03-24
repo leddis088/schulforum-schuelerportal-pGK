@@ -32,7 +32,7 @@ $sql = "CREATE TABLE IF NOT EXISTS posts (
     _id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     author_id VARCHAR(255) NOT NULL,
-    content VARCHAR(MAX) NOT NULL,
+    content TEXT NOT NULL,
     date_created VARCHAR(255) NOT NULL,
     topic VARCHAR(255) NOT NULL
 )";
