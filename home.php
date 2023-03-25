@@ -25,6 +25,16 @@
     if ($conn->connect_error) {
       die('Connection failed: ' . $conn->connect_error);
     }
+    
+    $is_admin = false;
+    $sql = "SELECT * FROM user_perms WHERE user_id = ? AND permission = 'admin'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $is_admin = true;
+    }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if(isset($_POST['delete_post'])) {
