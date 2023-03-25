@@ -39,6 +39,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_password"])) {
+        $current_password = $_POST["current_password"];
+        $new_password = $_POST["new_password"];
+        $confirm_new_password = $_POST["confirm_new_password"];
+
+        $sql = "SELECT hash FROM users WHERE _id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $hash = $row["hash"];
+
+        if (password_verify($current_password, $hash)) {
+            if ($new_password === $confirm_new_password) {
+                $new_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                $sql = "UPDATE users SET hash=? WHERE _id=?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ss", $new_hash, $user_id);
+                $stmt->execute();
+
+                if ($stmt->affected_rows > 0) {
+                    echo "Password changed successfully!";
+                } else {
+                    echo "Error updating password.";
+                }
+            } else {
+                echo "New passwords do not match.";
+            }
+        } else {
+            echo "Incorrect current password.";
+        }
+    }
+
     if (isset($_POST["first_name"])) {
         $new_first_name = $_POST["first_name"];
         $sql = "UPDATE users SET first_name='$new_first_name' WHERE _id='$user_id'";
@@ -123,6 +157,12 @@ if (!$profile_picture) {
         <input type="text" name="username" value="<?php echo $username; ?>"><br><br>
         <label>first_name:</label>
         <input type="text" name="first_name" value="<?php echo $first_name; ?>"><br><br>
+        <label>Current Password:</label>
+        <input type="password" name="current_password"><br><br>
+        <label> New Password:</label>
+        <input type="password" name="new_password">
+        <input type="password" name="confirm_new_password"><br>
+        <input type="submit" name="change_password" value="Change Password"><br><br>
         <label>last_name:</label>
         <input type="text" name="last_name" value="<?php echo $last_name; ?>"><br><br>
         <label>Class:</label>

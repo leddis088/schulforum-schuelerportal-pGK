@@ -98,12 +98,12 @@
         echo "<p>No comments yet</p>";
       }
     
-      if ($is_admin) {
+		  if ($comment_author_id == $user_id || $is_admin) {
         echo "<form method='post' action=''>";
-        echo "<input type='hidden' name='delete_post' value='$post_id'>";
-        echo "<input type='submit' value='Delete Post'>";
+        echo "<input type='hidden' name='delete_comment' value='$post_id'>";
+        echo "<input type='submit' value='Delete comment'>";
         echo "</form>";
-      }
+        }
     
       echo "<h3>Add Comment</h3>";
       echo "<form method='post' action='comment.php'>";

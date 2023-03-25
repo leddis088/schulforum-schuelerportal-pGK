@@ -55,7 +55,7 @@
         $post_id = $_POST['post_id'];
         $content = $_POST['content'];
         $topic = $_POST['topic'];
-        $date_created = date("Y-m-d H:i:s");
+        $date_created = date("d-m-Y H:i");
 
         $sql = "INSERT INTO posts (_id, name, author_id, content, date_created, topic) VALUES (UUID(), ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
@@ -89,7 +89,7 @@
     <h2>Posts</h2>
 
     <?php
-    $sql = "SELECT * FROM posts";
+    $sql = "SELECT * FROM posts ORDER BY date_created DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
