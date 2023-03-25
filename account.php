@@ -39,6 +39,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    if (isset($_POST["first_name"])) {
+        $new_first_name = $_POST["first_name"];
+        $sql = "UPDATE users SET first_name='$new_first_name' WHERE _id='$user_id'";
+        if ($conn->query($sql) === TRUE) {
+            $first_name = $new_first_name;
+        } else {
+            die("Error updating class: " . $conn->error);
+        }
+    }
+
+    if (isset($_POST["last_name"])) {
+        $new_last_name = $_POST["last_name"];
+        $sql = "UPDATE users SET last_name='$new_last_name' WHERE _id='$user_id'";
+        if ($conn->query($sql) === TRUE) {
+            $last_name = $new_last_name;
+        } else {
+            die("Error updating class: " . $conn->error);
+        }
+    }
+
     if (isset($_POST["class"])) {
         $new_class = $_POST["class"];
         $sql = "UPDATE users SET class='$new_class' WHERE _id='$user_id'";
@@ -77,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "DELETE FROM users WHERE _id='$user_id'";
         if ($conn->query($sql) === TRUE) {
             session_destroy();
-            header("Location: index.php");
+            header("Location: login.php");
         } else {
             die("Error deleting account: " . $conn->error);
         }
@@ -101,6 +121,10 @@ if (!$profile_picture) {
     <form method="post" enctype="multipart/form-data">
         <label>Username:</label>
         <input type="text" name="username" value="<?php echo $username; ?>"><br><br>
+        <label>first_name:</label>
+        <input type="text" name="first_name" value="<?php echo $first_name; ?>"><br><br>
+        <label>last_name:</label>
+        <input type="text" name="last_name" value="<?php echo $last_name; ?>"><br><br>
         <label>Class:</label>
         <input type="text" name="class" value="<?php echo $class; ?>"><br><br>
         <label>Profile Picture:</label>

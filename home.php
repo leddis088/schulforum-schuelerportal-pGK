@@ -153,6 +153,8 @@
 		  } else {
 			echo "<p>No comments yet</p>";
 		  }
+      echo"<br>";
+      echo"<br>";
 		}
 	  }
 	  

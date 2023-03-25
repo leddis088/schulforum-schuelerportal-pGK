@@ -29,7 +29,7 @@
       if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['hash'])) {
-          $_SESSION["user_id"] = $user['_id']; // <-- Update this line
+          $_SESSION["user_id"] = $user['_id'];
           header("Location: home.php");
           exit();
       } else {
