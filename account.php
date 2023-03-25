@@ -155,16 +155,16 @@ if (!$profile_picture) {
     <form method="post" enctype="multipart/form-data">
         <label>Username:</label>
         <input type="text" name="username" value="<?php echo $username; ?>"><br><br>
-        <label>first_name:</label>
+        <label>First Name:</label>
         <input type="text" name="first_name" value="<?php echo $first_name; ?>"><br><br>
+        <label>Last Name:</label>
+        <input type="text" name="last_name" value="<?php echo $last_name; ?>"><br><br>
         <label>Current Password:</label>
         <input type="password" name="current_password"><br><br>
         <label> New Password:</label>
         <input type="password" name="new_password">
         <input type="password" name="confirm_new_password"><br>
         <input type="submit" name="change_password" value="Change Password"><br><br>
-        <label>last_name:</label>
-        <input type="text" name="last_name" value="<?php echo $last_name; ?>"><br><br>
         <label>Class:</label>
         <input type="text" name="class" value="<?php echo $class; ?>"><br><br>
         <label>Profile Picture:</label>

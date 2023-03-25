@@ -32,8 +32,7 @@ li a:hover:not(.active) {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: rgb(104,34,195);
-    background: linear-gradient(0deg, rgba(104,34,195,1) 0%, rgba(253,45,213,1) 100%);
+    background: rgb(65, 65, 65);
 
 }
 form {
@@ -103,9 +102,23 @@ nav {
   position: relative;
   width: 590px;
   height: 50px;
-  background-color: #34495e;
+  background-color: rgb(0, 0, 0);
   border-radius: 8px;
   font-size: 0;
+}
+
+.post_ground{
+  background-color: rgb(38, 38, 38);
+  opacity: 80%;
+  border-style: groove;
+  border-radius: 5%;
+  padding: 10%;
+}
+
+.post{
+  height: auto;
+  width: auto;
+  padding: 10%;
 }
 
 nav a{
