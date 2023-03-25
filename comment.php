@@ -33,7 +33,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $content = $_POST['content'];
       $post_id = $_POST['post_id'];
-      $date_created = date("Y-m-d H:i:s");
+      $date_created = date("d-m-Y H:i");
     
       $sql = "INSERT INTO comments (_id, author_id, content, date_created, post_id) VALUES (UUID(), ?, ?, ?, ?)";
       $stmt = $conn->prepare($sql);
