@@ -6,7 +6,7 @@
   </head>
   <body>
       <ul>
-        <li style="float:right"><a href="home.php">Back</a></li>
+        <li style="float:right"><a href="forum.php">Back</a></li>
       </ul>
 
     <?php

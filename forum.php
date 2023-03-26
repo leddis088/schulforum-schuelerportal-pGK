@@ -28,7 +28,7 @@
       }
 
       $is_admin = false;
-      $sql = "SELECT * FROM user_perms WHERE user_id = 'c6a67f4f-cbcb-11ed-b38f-2aef96d16b46' AND permission = 'admin'";
+      $sql = "SELECT * FROM user_perms WHERE _id = ? AND permission = 'admin'";
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("s", $user_id);
       $stmt->execute();
@@ -78,9 +78,8 @@
 
       <nav>
         <ul>
-          <li><a class="active" href="#">Home</a></li>
+          <li><a class="active" href="portal.php">Portal</a></li>
           <li><a href="#">Neuigkeiten</a></li>
-          <li><a href="#">Portal</a></li>
           <li style="float:right"><a href="account.php">account</a></li>
           <li><a href="logout.php">logout</a></li>
         </ul>
@@ -128,7 +127,7 @@
         echo "<p>Date: $post_date</p>";
         echo "<h4>$post_content</h4>";
       
-        if ($author_id == $user_id or $is_admin) {
+        if ($author_id == $user_id || $is_admin) {
         echo "<form method='post' action=''>";
         echo "<input type='hidden' name='delete_post' value='$post_id'>";
         echo "<input type='submit' value='Delete Post'>";

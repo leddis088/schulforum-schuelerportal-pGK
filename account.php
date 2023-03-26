@@ -147,10 +147,10 @@ if (!$profile_picture) {
 <html>
 <head>
     <title>Account Settings</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="home_style.css">
 </head>
 <body>
-<li style="float:right"><a href="home.php">Back</a></li>
+<li style="float:right"><a href="forum.php">Back</a></li>
 <h1>Account Settings</h1>
     <form method="post" enctype="multipart/form-data">
         <label>Username:</label>
