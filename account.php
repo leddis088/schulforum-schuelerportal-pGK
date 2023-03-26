@@ -166,7 +166,15 @@ if (!$profile_picture) {
         <input type="password" name="confirm_new_password"><br>
         <input type="submit" name="change_password" value="Change Password"><br><br>
         <label>Class:</label>
-        <input type="text" name="class" value="<?php echo $class; ?>"><br><br>
+        <select id="class" name="class">
+        <option value="1A">1A</option>
+        <option value="1B">1B</option>
+        <option value="2A">2A</option>
+        <option value="2B">2B</option>
+        <option value="3A">3A</option>
+        <option value="4A">4A</option>
+        <option value="4B">4B</option>
+        </select><br><br>
         <label>Profile Picture:</label>
         <img src="<?php echo $profile_picture ? $profile_picture : "uploads/$user_id.jpg"; ?>" width="50" height="50"><br>
         <input type="file" name="profile_picture"><br><br>
