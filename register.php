@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $user_id = $conn->insert_id;
 
-            $stmt = $conn->prepare("INSERT INTO user_perms (_id, user_id, permission) VALUES (UUID(), ?, 'user')");
+            $stmt = $conn->prepare("INSERT INTO user_perms (_id, user_id, permission) VALUES ('1', UUID(), 'user')");
             $stmt->bind_param("s", $user_id);
             $stmt->execute();
 
