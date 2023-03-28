@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html>
 <head>
     <title>portal</title>
     <link rel="stylesheet" href="home_style.css">
@@ -14,3 +14,4 @@
         </ul>
       </nav>
 </body>
+</html>

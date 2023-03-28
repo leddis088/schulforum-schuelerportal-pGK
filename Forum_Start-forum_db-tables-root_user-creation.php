@@ -58,6 +58,18 @@ $sql = "CREATE TABLE IF NOT EXISTS comments (
 )";
 
 echo "comments table created successfully";
+
+$conn->query($sql);
+
+$sql = "CREATE TABLE IF NOT EXISTS bug_reports (
+    _id VARCHAR(255) PRIMARY KEY,
+    author_id VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    date_created VARCHAR(255) NOT NULL,
+    bug_id VARCHAR(255) NOT NULL
+)";
+
+echo "bug_report table created successfully";
 $conn->query($sql);
 
 $sql = "SELECT * FROM users WHERE username='root'";
