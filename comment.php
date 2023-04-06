@@ -31,16 +31,24 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $content = $_POST['content'];
-      $post_id = $_POST['post_id'];
-      $date_created = date("d-m-Y H:i");
-    
-      $sql = "INSERT INTO comments (_id, author_id, content, date_created, post_id) VALUES (UUID(), ?, ?, ?, ?)";
-      $stmt = $conn->prepare($sql);
-      $stmt->bind_param("ssss", $user_id, $content, $date_created, $post_id);
-      $stmt->execute();
+      if (isset($_POST['delete_comment'])) {
+        $comment_id = $_POST['comment_id'];
+        $sql = "DELETE FROM comments WHERE _id = ? AND (author_id = ? OR ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sss", $comment_id, $user_id, $is_admin);
+        $stmt->execute();
+      } else {
+        $content = $_POST['content'];
+        $post_id = $_POST['post_id'];
+        $date_created = date("d-m-Y H:i");
+
+        $sql = "INSERT INTO comments (_id, author_id, content, date_created, post_id) VALUES (UUID(), ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $user_id, $content, $date_created, $post_id);
+        $stmt->execute();
+      }
     }
-    
+
     $post_id = $_POST['post_id'];
 
     $sql = "SELECT * FROM posts WHERE _id = ?";
@@ -76,47 +84,47 @@
       $stmt->bind_param("s", $post_id);
       $stmt->execute();
       $result3 = $stmt->get_result();
+  if ($result3->num_rows > 0) {
+    while($row = $result3->fetch_assoc()) {
+      $comment_content = $row['content'];
+      $comment_date = $row['date_created'];
+      $comment_author_id = $row['author_id'];
 
-      if ($result3->num_rows > 0) {
-        while($row = $result3->fetch_assoc()) {
-          $comment_content = $row['content'];
-          $comment_date = $row['date_created'];
-          $comment_author_id = $row['author_id'];
+      $sql4 = "SELECT * FROM users WHERE _id = ?";
+      $stmt = $conn->prepare($sql4);
+      $stmt->bind_param("s", $comment_author_id);
+      $stmt->execute();
+      $result4 = $stmt->get_result();
+      $comment_author = $result4->fetch_assoc();
+      $comment_author_name = $comment_author['first_name'] . ' ' . $comment_author['last_name'];
+      echo "<h4>$comment_content</h4>";
+      echo "<p>Author: $comment_author_name</p>";
+      echo "<p>Date: $comment_date</p>";
 
-          $sql4 = "SELECT * FROM users WHERE _id = ?";
-          $stmt = $conn->prepare($sql4);
-          $stmt->bind_param("s", $comment_author_id);
-          $stmt->execute();
-          $result4 = $stmt->get_result();
-          $comment_author = $result4->fetch_assoc();
-          $comment_author_name = $comment_author['first_name'] . ' ' . $comment_author['last_name'];
-          echo "<h4>$comment_content</h4>";
-          echo "<p>Author: $comment_author_name</p>";
-          echo "<p>Date: $comment_date</p>";
-        }
-      } else {
-        echo "<p>No comments yet</p>";
-      }
-    
-		  if ($comment_author_id == $user_id || $is_admin) {
-        echo "<form method='post' action=''>";
-        echo "<input type='hidden' name='delete_comment' value='$post_id'>";
-        echo "<input type='submit' value='Delete comment'>";
-        echo "</form>";
-        }
-    
-      echo "<h3>Add Comment</h3>";
-      echo "<form method='post' action='comment.php'>";
-      echo "<input type='hidden' name='post_id' value='$post_id'>";
-      echo "<label>Content:</label>";
-      echo "<textarea name='content' required></textarea><br><br>";
-      echo "<input type='submit' value='Add Comment'>";
+    if ($comment_author_id == $user_id || $is_admin) {
+      echo "<form method='post' action=''>";
+       echo "<input type='hidden' name='delete_comment' value='true'>";
+      echo "<input type='hidden' name='comment_id' value='" . $row['_id'] . "'>";
+      echo "<input type='submit' value='Delete comment'>";
       echo "</form>";
-    } else {
-      echo "<p>Post not found</p>";
+      }
     }
-    
-    $conn->close();
+  } else {
+    echo "<p>No comments yet</p>";
+  }
+
+  echo "<h3>Add Comment</h3>";
+  echo "<form method='post' action='comment.php'>";
+  echo "<input type='hidden' name='post_id' value='$post_id'>";
+  echo "<label>Content:</label>";
+  echo "<textarea name='content' required></textarea><br><br>";
+  echo "<input type='submit' value='Add Comment'>";
+  echo "</form>";
+} else {
+  echo "<p>Post not found</p>";
+}
+
+  $conn->close();
     ?>
   </body>
-</html>     
+</html>

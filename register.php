@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
 
             $_SESSION["user_id"] = $user_id;
-            header("Location: login.php");
+            header("Location: welcome.php");
             exit();
         }
     }

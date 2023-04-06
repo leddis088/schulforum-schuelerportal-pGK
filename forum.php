@@ -79,7 +79,7 @@
       <nav>
         <ul>
           <li><a class="active" href="portal.php">Portal</a></li>
-          <li><a href="#">Neuigkeiten</a></li>
+          <li><a href="bug_report.php">Bug report</a></li>
           <li style="float:right"><a href="account.php">account</a></li>
           <li><a href="logout.php">logout</a></li>
         </ul>
