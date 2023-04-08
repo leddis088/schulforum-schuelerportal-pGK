@@ -78,7 +78,7 @@
 
       <nav>
         <ul>
-          <li><a href="portal.php">Portal</a></li>
+          <li><a class="active" href="portal.php">Portal</a></li>
           <li><a href="bug_report.php">Bug report</a></li>
           <li style="float:right"><a href="account.php">account</a></li>
           <li><a href="logout.php">logout</a></li>
@@ -136,7 +136,7 @@
         echo "<form method='post' action='comment.php'>";
         echo "<input type='hidden' name='post_id' value='$post_id'>";
         echo "<input type='submit' value='Kommentar verfassen'>";
-        echo "</form>";	
+        echo "</form>";
 
         echo "<h4>Comments</h4>";
       

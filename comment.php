@@ -39,7 +39,13 @@
         $stmt->execute();
       } else {
         $content = $_POST['content'];
-        $post_id = $_POST['post_id'];
+        if (isset($_POST['post_id'])) {
+          $post_id = $_POST['post_id'];
+        } elseif (isset($_GET['post_id'])) {
+          $post_id = $_GET['post_id'];
+        } else {
+          die("Post ID not found");
+        }
         $date_created = date("d-m-Y H:i");
 
         $sql = "INSERT INTO comments (_id, author_id, content, date_created, post_id) VALUES (UUID(), ?, ?, ?, ?)";
@@ -49,7 +55,13 @@
       }
     }
 
-    $post_id = $_POST['post_id'];
+    if (isset($_POST['post_id'])) {
+      $post_id = $_POST['post_id'];
+  } elseif (isset($_GET['post_id'])) {
+      $post_id = $_GET['post_id'];
+  } else {
+      die("Post ID not found");
+  }
 
     $sql = "SELECT * FROM posts WHERE _id = ?";
     $stmt = $conn->prepare($sql);
@@ -103,27 +115,28 @@
 
     if ($comment_author_id == $user_id || $is_admin) {
       echo "<form method='post' action=''>";
-       echo "<input type='hidden' name='delete_comment' value='true'>";
+      echo "<input type='hidden' name='delete_comment' value='true'>";
       echo "<input type='hidden' name='comment_id' value='" . $row['_id'] . "'>";
       echo "<input type='submit' value='Delete comment'>";
       echo "</form>";
       }
     }
-  } else {
-    echo "<p>No comments yet</p>";
-  }
-
-  echo "<h3>Add Comment</h3>";
-  echo "<form method='post' action='comment.php'>";
-  echo "<input type='hidden' name='post_id' value='$post_id'>";
-  echo "<label>Content:</label>";
-  echo "<textarea name='content' required></textarea><br><br>";
-  echo "<input type='submit' value='Add Comment'>";
-  echo "</form>";
-} else {
-  echo "<p>Post not found</p>";
-}
-
+      } else {
+        echo "<p>No comments yet</p>";
+      }
+      
+      echo "<h3>Add Comment</h3>";
+      echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "?post_id=" . $post_id . "'>";
+      echo "<input type='hidden' name='post_id' value='$post_id'>";
+      echo "<label>Content:</label>";
+      echo "<textarea name='content' required></textarea><br><br>";
+      echo "<input type='submit' value='Add Comment'>";
+      echo "</form>";
+      
+    } else {
+      echo "<p>Post not found</p>";
+    }
+  
   $conn->close();
     ?>
   </body>
