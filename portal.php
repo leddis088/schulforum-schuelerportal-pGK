@@ -9,7 +9,7 @@
     <nav>
         <ul>
           <li><a href="https://www.eduvidual.at/local/eduvidual/pages/login.php" target="_blank">eduvidual</a></li>
-          <li><a class="active" href="forum.php">Forum</a></li>
+          <li><a href="forum.php">Forum</a></li>
           <li><a href="https://nessa.webuntis.com/WebUntis/?school=priv-gym-klosterneuburg#/basic/login" target="_blank">Untis</a></li>
         </ul>
       </nav>
