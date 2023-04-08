@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bug Reports</title>
+    <title>Feedback Reports</title>
     <link rel="stylesheet" href="home_style.css">
   </head>
   <body>
@@ -45,7 +45,7 @@
         </ul>
       </nav>
 
-      <h1>Bug Reports</h1>
+      <h1>Feedback Reports</h1>
 
       <?php
       $sql = "SELECT * FROM bug_reports ORDER BY date_created DESC";
