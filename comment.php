@@ -33,6 +33,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if (isset($_POST['delete_comment'])) {
         $comment_id = $_POST['comment_id'];
+        $post_id = $_POST['post_id'];
         $sql = "DELETE FROM comments WHERE _id = ? AND (author_id = ? OR ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $comment_id, $user_id, $is_admin);
@@ -53,7 +54,10 @@
         $stmt->bind_param("ssss", $user_id, $content, $date_created, $post_id);
         $stmt->execute();
       }
+      header("Location: " . $_SERVER['PHP_SELF'] . "?post_id=" . $post_id);
+      exit();
     }
+
 
     if (isset($_POST['post_id'])) {
       $post_id = $_POST['post_id'];
@@ -117,6 +121,7 @@
       echo "<form method='post' action=''>";
       echo "<input type='hidden' name='delete_comment' value='true'>";
       echo "<input type='hidden' name='comment_id' value='" . $row['_id'] . "'>";
+      echo "<input type='hidden' name='post_id' value='" . $post_id . "'>";
       echo "<input type='submit' value='Delete comment'>";
       echo "</form>";
       }

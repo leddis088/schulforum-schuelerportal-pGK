@@ -73,7 +73,13 @@
           $stmt->bind_param("sssss", $content, $user_id, $content, $date_created, $topic);
           $stmt->execute();
         }
+
+        header("Location: forum.php");
+        exit();
+
       }
+
+
       ?>
 
       <nav>
