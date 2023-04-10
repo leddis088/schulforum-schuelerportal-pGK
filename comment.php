@@ -99,7 +99,7 @@
       echo "<hr></hr>";
       echo "<h3>Comments</h3>";
 
-      $sql3 = "SELECT * FROM comments WHERE post_id = ?";
+      $sql3 = "SELECT * FROM comments WHERE post_id = ? ORDER BY date_created";
       $stmt = $conn->prepare($sql3);
       $stmt->bind_param("s", $post_id);
       $stmt->execute();
