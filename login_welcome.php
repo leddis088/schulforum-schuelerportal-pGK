@@ -30,7 +30,7 @@
     $user = $result->fetch_assoc();
   }
 
-  echo "<h1>" . $user['first_name'] . " " . $user['last_name'] . " (" . $user['username'] . ") hat sich erfolgreich eingeloggt!</h1>";
+  echo "<h1>" . $user['first_name'] . " " . $user['last_name'] . " @" . $user['username'] . " hat sich erfolgreich eingeloggt!</h1>";
 
   echo '<script>
           setTimeout(function() {

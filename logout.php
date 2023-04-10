@@ -5,7 +5,7 @@
 
   session_destroy();
 
-  echo "Bis zum naechsten Mal ";
+  echo "<h1> Bis zum nächsten Mal </h1>";
 ?>
 <html>
   <head>
@@ -20,7 +20,7 @@
       } else {
           document.getElementById("count").innerHTML = counter;
           }
-  }, 100);
+  }, 300);
   </script>
 </html>
 <?php
