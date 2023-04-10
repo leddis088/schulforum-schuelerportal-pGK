@@ -88,6 +88,9 @@ $conn->close();
         <option value="4B">4B</option>
     </select>
     <br>
+    <td><input type="checkbox" required>I accept the</td>
+    <a href="agb.html" target="_blank">AGB's</a>
+    <br>
     <button type="submit">Register</button>
 </form>
 <script>

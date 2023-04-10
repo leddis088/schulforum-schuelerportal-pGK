@@ -147,7 +147,7 @@ if (!$profile_picture) {
 <html>
 <head>
     <title>Account Settings</title>
-    <link rel="stylesheet" href="home_style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <li style="float:right"><a href="forum.php">Back</a></li>
