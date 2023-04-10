@@ -162,7 +162,8 @@ if (!$profile_picture) {
         <label>Current Password:</label>
         <input type="password" name="current_password"><br><br>
         <label> New Password:</label>
-        <input type="password" name="new_password">
+        <input type="password" name="new_password"><br><br>
+        <label> Confirm Password:</label>
         <input type="password" name="confirm_new_password"><br>
         <input type="submit" name="change_password" value="Change Password"><br><br>
         <label>Class:</label>

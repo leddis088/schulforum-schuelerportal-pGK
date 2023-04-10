@@ -66,10 +66,12 @@
           $author_name = $author['first_name'] . ' ' . $author['last_name'];
         
           echo "<div class='bug_report'>";
-          echo "<h4>Bug ID: $bug_id</h4>";
-          echo "<p>Author: $author_name</p>";
-          echo "<p>Date: $bug_date</p>";
-          echo "<h2>$bug_content</h2>";
+          echo "<hr></hr>";
+          echo "<h4><i>Bug ID: $bug_id</i></h4>";
+          echo "<p><i><b>Author: $author_name</i></b></p>";
+          echo "<p><b>Date: $bug_date</b></p>";
+          echo "<pre>  </pre>";
+          echo "<p>$bug_content</p>";
         
           if ($author_id == $user_id || $is_admin) {
             echo "<form method='post' action=''>";

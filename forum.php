@@ -129,9 +129,10 @@
         echo "<div class='post' id='post2' name='post2'>";
 
         echo "<h1>Topic: $post_topic</h1>";
-        echo "<p>Author: $author_name</p>";
-        echo "<p>Date: $post_date</p>";
-        echo "<h4>$post_content</h4>";
+        echo "<p><i><b>Author: $author_name</b></i></p>";
+        echo "<p><b>Date: $post_date</b></p>";
+        echo "<pre>  </pre>";
+        echo "<p>$post_content</p>";
       
         if ($author_id == $user_id || $is_admin) {
         echo "<form method='post' action=''>";
@@ -166,9 +167,11 @@
           $comment_author = $result4->fetch_assoc();
           $comment_author_name = $comment_author['first_name'] . ' ' . $comment_author['last_name'];
       
-          echo "<p>$comment_content</p>";
-          echo "<p>Author: $comment_author_name</p>";
-          echo "<p>Date: $comment_date</p>";
+      echo "<hr></hr>";
+      echo "<p><i><b>Author: $comment_author_name</i></b></p>";
+      echo "<p><b>Date: $comment_date</b></p>";
+      echo "<pre>  </pre>";
+      echo "<p>$comment_content</p>";
         }
         } else {
         echo "<p>No comments yet</p>";

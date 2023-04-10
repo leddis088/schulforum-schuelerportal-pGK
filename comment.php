@@ -4,11 +4,11 @@
     <title>Forum</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
-      <ul>
-        <li style="float:right"><a href="forum.php">Back</a></li>
-      </ul>
-
+  <nav>
+        <ul>
+          <li><a href="forum.php">Back</a></li>
+        </ul>
+      </nav>
     <?php
     session_start();
 
@@ -89,10 +89,14 @@
       $author_name = $author['first_name'] . ' ' . $author['last_name'];
 
       echo "<h1>$post_topic</h1>";
-      echo "<h2>$post_content</h2>";
-      echo "<p>Author: $author_name</p>";
-      echo "<p>Date: $post_date</p>";
+      echo "<p><i><b>Author: $author_name</i></b></p>";
+      echo "<p><b>Date: $post_date</b></p>";
+      echo "<pre>  </pre>";
+      echo "<p>$post_content</p>";
 
+      echo "<pre>  </pre>";
+      echo "<pre>  </pre>";
+      echo "<hr></hr>";
       echo "<h3>Comments</h3>";
 
       $sql3 = "SELECT * FROM comments WHERE post_id = ?";
@@ -113,9 +117,11 @@
       $result4 = $stmt->get_result();
       $comment_author = $result4->fetch_assoc();
       $comment_author_name = $comment_author['first_name'] . ' ' . $comment_author['last_name'];
-      echo "<h4>$comment_content</h4>";
-      echo "<p>Author: $comment_author_name</p>";
-      echo "<p>Date: $comment_date</p>";
+      echo "<hr></hr>";
+      echo "<p><i><b>Author: $comment_author_name</i></b></p>";
+      echo "<p><b>Date: $comment_date</b></p>";
+      echo "<pre>  </pre>";
+      echo "<p>$comment_content</p>";
 
     if ($comment_author_id == $user_id || $is_admin) {
       echo "<form method='post' action=''>";
