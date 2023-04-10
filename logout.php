@@ -8,8 +8,11 @@
   echo "Bis zum naechsten Mal ";
 ?>
 <html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
   <script>
-  var counter = 10;
+  var counter = 3;
   setInterval(function() {
       counter--;
       if(counter < 0) {
@@ -17,7 +20,7 @@
       } else {
           document.getElementById("count").innerHTML = counter;
           }
-  }, 1000);
+  }, 100);
   </script>
 </html>
 <?php

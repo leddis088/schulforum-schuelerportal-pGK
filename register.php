@@ -64,10 +64,10 @@ $conn->close();
         <p><?php echo $error_message; ?></p>
     <?php } ?>
     <form method="post">
-        <label for="first_name">First Name</label>
+        <label for="first_name" required>First Name</label>
         <input type="text" id="first_name" name="first_name">
         <br>
-        <label for="last_name">Last Name</label>
+        <label for="last_name" required>Last Name</label>
         <input type="text" id="last_name" name="last_name">
         <br>
         <label for="username">Username</label>

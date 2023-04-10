@@ -154,9 +154,9 @@ if (!$profile_picture) {
 <h1>Account Settings</h1>
     <form method="post" enctype="multipart/form-data">
         <label>Username:</label>
-        <input type="text" name="username" value="<?php echo $username; ?>"><br><br>
+        <input type="text" name="username" value="<?php echo $username; ?>"> required<br><br>
         <label>First Name:</label>
-        <input type="text" name="first_name" value="<?php echo $first_name; ?>"><br><br>
+        <input type="text" name="first_name" value="<?php echo $first_name; ?>" required><br><br>
         <label>Last Name:</label>
         <input type="text" name="last_name" value="<?php echo $last_name; ?>"><br><br>
         <label>Current Password:</label>
@@ -175,9 +175,6 @@ if (!$profile_picture) {
         <option value="4A">4A</option>
         <option value="4B">4B</option>
         </select><br><br>
-        <label>Profile Picture:</label>
-        <img src="<?php echo $profile_picture ? $profile_picture : "uploads/$user_id.jpg"; ?>" width="50" height="50"><br>
-        <input type="file" name="profile_picture"><br><br>
         <input type="submit" value="Save Changes">
     </form>
     <br>
