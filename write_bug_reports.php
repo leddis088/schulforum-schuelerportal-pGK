@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>write a bug report</title>
-        <link rel="stylesheet" href="home_style.css">
+        <link rel="stylesheet" href="style.css">
         <script>
             function toggleOtherTextField() {
                 let selectElement = document.getElementById('topic');
