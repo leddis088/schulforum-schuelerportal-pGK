@@ -150,15 +150,17 @@ if (!$profile_picture) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<li style="float:right"><a href="forum.php">Back</a></li>
+<nav>
+        <a style="float:right"><a href="forum.php">Back</a>
+</nav>
 <h1>Account Settings</h1>
     <form method="post" enctype="multipart/form-data">
         <label>Username:</label>
-        <input type="text" name="username" value="<?php echo $username; ?>"> required<br><br>
+        <input type="text" name="username" value="<?php echo $username; ?>" required><br><br>
         <label>First Name:</label>
         <input type="text" name="first_name" value="<?php echo $first_name; ?>" required><br><br>
         <label>Last Name:</label>
-        <input type="text" name="last_name" value="<?php echo $last_name; ?>"><br><br>
+        <input type="text" name="last_name" value="<?php echo $last_name; ?>" required><br><br>
         <label>Current Password:</label>
         <input type="password" name="current_password"><br><br>
         <label> New Password:</label>

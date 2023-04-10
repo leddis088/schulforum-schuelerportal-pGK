@@ -39,10 +39,8 @@
       ?>
 
       <nav>
-        <ul>
           <li><a class="active" href="forum.php">Back</a></li>
           <li><a href="write_bug_reports.php">report bug</a></li>
-        </ul>
       </nav>
 
       <h1>Feedback Reports</h1>

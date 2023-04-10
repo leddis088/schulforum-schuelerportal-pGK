@@ -16,10 +16,8 @@
         </script>
     </head>
     <nav>
-        <ul>
-          <li><a class="active" href="bug_report.php">Back</a></li>
-        </ul>
-      </nav>
+        <li><a class="active" href="bug_report.php">Back</a></li>
+    </nav>
     <body>
         <h1>Bug reports</h1>
         <form method="post" action="">

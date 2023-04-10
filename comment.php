@@ -5,10 +5,8 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <nav>
-        <ul>
-          <li><a href="forum.php">Back</a></li>
-        </ul>
-      </nav>
+      <li><a href="forum.php">Back</a></li>
+  </nav>
     <?php
     session_start();
 
