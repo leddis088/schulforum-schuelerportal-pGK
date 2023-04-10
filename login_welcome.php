@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Welcome</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <?php
@@ -34,7 +35,7 @@
   echo '<script>
           setTimeout(function() {
             window.location.href = "forum.php";
-          }, 3000);
+          }, 5000);
         </script>';
 
 $conn->close();
