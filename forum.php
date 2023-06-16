@@ -83,7 +83,7 @@
       ?>
 
       <nav>
-          <li><a class="active" href="portal.php">Portal</a></li>
+          <li><a class="active" href="index.php">Portal</a></li>
           <li><a href="bug_report.php">Bug report</a></li>
           <li style="float:right"><a href="account.php">account</a></li>
           <li><a href="logout.php">logout</a></li>
@@ -115,6 +115,7 @@
         $post_topic = $row['topic'];
         $post_date = $row['date_created'];
         $author_id = $row['author_id'];
+        $class = $row['class']
         $sql2 = "SELECT * FROM users WHERE _id = ?";
         $stmt = $conn->prepare($sql2);
         $stmt->bind_param("s", $author_id);
