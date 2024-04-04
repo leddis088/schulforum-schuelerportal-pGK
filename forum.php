@@ -115,7 +115,7 @@
         $post_topic = $row['topic'];
         $post_date = $row['date_created'];
         $author_id = $row['author_id'];
-        $class = $row['class']
+        $class = $row['class'];
         $sql2 = "SELECT * FROM users WHERE _id = ?";
         $stmt = $conn->prepare($sql2);
         $stmt->bind_param("s", $author_id);
